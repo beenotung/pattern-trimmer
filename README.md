@@ -10,9 +10,11 @@ A simple web tool for removing prefixes and suffixes from text. Built with vanil
 - **Character Statistics**: Track original, processed, and removed character counts
 - **No Dependencies**: Pure HTML, CSS, and JavaScript - works offline
 
-## Live Demo
+## Use Pattern Trimmer
 
-Simply open `index.html` in your web browser to use the application.
+🌐 **[Use Pattern Trimmer](https://pattern-trimmer.surge.sh)** - Online version ready to use, no installation required, no data stored in server
+
+Alternatively, download and open `index.html` in your web browser to use the application offline.
 
 ## Usage
 
