@@ -191,19 +191,49 @@
           <label for="inputText">Text to process:</label>
           <textarea
             id="inputText"
-            placeholder="Enter your text here..."
+            placeholder="Enter your text here...&#10;&#10;Example:&#10;se-024-Class 5 Recording - Introduction to Data Flow Diagram (Lecture).mp4&#10;se-023-Class 5 Recording - Class 5 Overview.mp4"
           ></textarea>
         </div>
 
         <div class="row">
           <div class="form-group">
             <label for="prefix">Prefix to remove:</label>
-            <input type="text" id="prefix" placeholder="e.g., 'Hello '" />
+            <input
+              type="text"
+              id="prefix"
+              placeholder="e.g., 'se-*-' or 'Hello '"
+            />
+            <small
+              style="
+                color: #666;
+                font-size: 0.85rem;
+                margin-top: 4px;
+                display: block;
+              "
+            >
+              Use * for wildcards. Example: "se-*-" matches "se-024-",
+              "se-023-", etc.
+            </small>
           </div>
 
           <div class="form-group">
             <label for="suffix">Suffix to remove:</label>
-            <input type="text" id="suffix" placeholder="e.g., ' World'" />
+            <input
+              type="text"
+              id="suffix"
+              placeholder="e.g., '.mp4' or ' World'"
+            />
+            <small
+              style="
+                color: #666;
+                font-size: 0.85rem;
+                margin-top: 4px;
+                display: block;
+              "
+            >
+              Use * for wildcards. Example: "*.mp4" matches any file ending with
+              .mp4
+            </small>
           </div>
         </div>
 
@@ -251,14 +281,23 @@
 
         let processed = text
 
-        // Remove prefix if it exists at the beginning
-        if (prefix && processed.startsWith(prefix)) {
-          processed = processed.substring(prefix.length)
+        // Remove prefix if it matches (supports wildcards)
+        if (prefix) {
+          let prefixMatch = matchPattern(processed, prefix, 'prefix')
+          if (prefixMatch) {
+            processed = processed.substring(prefixMatch.length)
+          }
         }
 
-        // Remove suffix if it exists at the end
-        if (suffix && processed.endsWith(suffix)) {
-          processed = processed.substring(0, processed.length - suffix.length)
+        // Remove suffix if it matches (supports wildcards)
+        if (suffix) {
+          let suffixMatch = matchPattern(processed, suffix, 'suffix')
+          if (suffixMatch) {
+            processed = processed.substring(
+              0,
+              processed.length - suffixMatch.length,
+            )
+          }
         }
 
         output.textContent = processed
@@ -271,6 +310,38 @@
         originalLength.textContent = original
         processedLength.textContent = processedLen
         removedLength.textContent = removed
+      }
+
+      function matchPattern(text, pattern, type) {
+        // If no wildcards, use exact matching
+        if (!pattern.includes('*')) {
+          if (type === 'prefix' && text.startsWith(pattern)) {
+            return pattern
+          }
+          if (type === 'suffix' && text.endsWith(pattern)) {
+            return pattern
+          }
+          return null
+        }
+
+        // Convert wildcard pattern to regex for more accurate matching
+        let regexPattern = pattern
+          .replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // Escape special regex chars
+          .replace(/\\\*/g, '.*?') // Convert \* to .*? (non-greedy)
+
+        if (type === 'prefix') {
+          // For prefix, find the match that starts at the beginning
+          let regex = new RegExp('^' + regexPattern)
+          let match = text.match(regex)
+          return match ? match[0] : null
+        } else if (type === 'suffix') {
+          // For suffix, find the match that ends at the end
+          let regex = new RegExp(regexPattern + '$')
+          let match = text.match(regex)
+          return match ? match[0] : null
+        }
+
+        return null
       }
 
       function copyToClipboard() {

@@ -33,12 +33,29 @@ Alternatively, download and open `index.html` in your web browser to use the app
 - **Suffix to remove**: `"!"`
 - **Result**: `"World"`
 
-**Extracting Video Title from Filename:**
+**Extracting Title from Filename:**
 
-- **Input Text**: `"/home/user/videos/2023-12-25_Christmas_Vacation_Family_Reunion.mp4"`
-- **Prefix to remove**: `"/home/user/videos/2023-12-25_"`
-- **Suffix to remove**: `".mp4"`
-- **Result**: `"Christmas_Vacation_Family_Reunion"`
+- **Input Text**: `se-024-Class 5 Recording - Introduction to Data Flow Diagram.mp4`
+- **Prefix to remove**: `se-024-` (exact match) or `se-*-` (wildcard matches any number)
+- **Suffix to remove**: `.mp4`
+- **Result**: `Class 5 Recording - Introduction to Data Flow Diagram`
+
+**Batch Processing with Wildcards:**
+
+- **Input Text**:
+  ```
+  se-024-Class 5 Recording - Introduction to Data Flow Diagram (Lecture).mp4
+  se-025-Class 5 Recording - Data Flow Diagram Creation (Demo).mp4
+  se-026-Class 5 Recording - Common Mistakes in Flow Diagrams (Lecture).mp4
+  ```
+- **Prefix to remove**: `se-*-` (matches `se-024-`, `se-025-`, `se-026-`)
+- **Suffix to remove**: `.mp4`
+- **Result**:
+  ```
+  Class 5 Recording - Introduction to Data Flow Diagram (Lecture)
+  Class 5 Recording - Data Flow Diagram Creation (Demo)
+  Class 5 Recording - Common Mistakes in Flow Diagrams (Lecture)
+  ```
 
 **Removing File Path and Extension:**
 
@@ -49,11 +66,20 @@ Alternatively, download and open `index.html` in your web browser to use the app
 
 ## How It Works
 
-The application uses JavaScript's `startsWith()` and `endsWith()` methods to safely remove prefixes and suffixes:
+The application supports both exact matching and wildcard patterns:
 
+**Exact Matching:**
+
+- Uses JavaScript's `startsWith()` and `endsWith()` methods for precise text removal
 - Only removes prefix if it exists at the very beginning of the text
 - Only removes suffix if it exists at the very end of the text
-- Preserves the original text if prefix/suffix don't match exactly
+
+**Wildcard Patterns:**
+
+- Use `*` to match any characters in your prefix or suffix patterns
+- Converts wildcard patterns to regex for flexible matching
+- Non-greedy matching ensures predictable results
+- Preserves the original text if patterns don't match
 
 ## Browser Compatibility
 
