@@ -1,11 +1,11 @@
-# Trim String
+# Pattern Trimmer
 
-A simple web tool for removing prefixes and suffixes from text strings. Built with vanilla HTML, CSS, and JavaScript - no dependencies required.
+A simple web tool for removing prefixes and suffixes from text. Built with vanilla HTML, CSS, and JavaScript - no dependencies required.
 
 ## Features
 
 - **Real-time Processing**: See results instantly as you type
-- **Prefix & Suffix Removal**: Remove unwanted text from the beginning and end of strings
+- **Prefix & Suffix Removal**: Remove unwanted text from the beginning and end of input text
 - **Copy to Clipboard**: One-click copying with visual feedback
 - **Character Statistics**: Track original, processed, and removed character counts
 - **No Dependencies**: Pure HTML, CSS, and JavaScript - works offline
@@ -61,8 +61,8 @@ The application uses JavaScript's `startsWith()` and `endsWith()` methods to saf
 ## File Structure
 
 ```
-trim-string/
-├── index.html          # Main application file
+.
+├── index.html         # Main application file
 ├── README.md          # This file
 └── LICENSE            # BSD-2-Clause license
 ```
