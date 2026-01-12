@@ -298,10 +298,16 @@
       let processedLength = document.getElementById('processedLength')
       let removedLength = document.getElementById('removedLength')
 
+      prefixInput.value = localStorage.getItem('prefix') || ''
+      suffixInput.value = localStorage.getItem('suffix') || ''
+
       function processText() {
         let text = inputText.value
         let prefix = prefixInput.value
         let suffix = suffixInput.value
+
+        localStorage.setItem('prefix', prefix)
+        localStorage.setItem('suffix', suffix)
 
         let processed = text
 
